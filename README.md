@@ -34,6 +34,7 @@ The current version is incomplete and I plan to make several changes such as:
 - Audio for the bullets and background music.
 - At the end of the game I would like to display stats such as accuracy and aliens destroyed.
 - Improve the graphics and finetune the gameplay.
+- Creating a Start Menu with graphics.
 - etc.
 
 (If you couldn't tell I am also practicing how to format and write README.md files)
