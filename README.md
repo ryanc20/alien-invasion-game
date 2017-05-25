@@ -2,7 +2,7 @@
 
 Alien Invasion is a game written in Python that is a clone of the popular Space Invader games from ancient times.
 
-# Example of Code
+## Example of Code
 
 ```python
 def store_high_score(stats):
@@ -15,15 +15,15 @@ def store_high_score(stats):
 ```
 The above code shows the process for storing the high score into a text file.
 
-# Motivation
+## Motivation
 
 I am fascinated by the process of creating games and managing everything to create a final product. I wanted to become more exposed to using Python and I thought making a game would be a great way to bind two of my interests into a rewarding experience.
 
-# How to Run
+## How to Run
 
 Download the repository (assuming Python and the Pygame library are installed) and run the alien_invasion.py
 
-# Note
+## Note
 
 The game was completed following a tutorial from the book [Python Crash Course: A Hands-On, Project-Based Introduction to Python by Eric Matthes.](https://www.amazon.com/Python-Crash-Course-Hands-Project-Based/dp/1593276036/ref=sr_1_1?ie=UTF8&qid=1495703885&sr=8-1&keywords=python+crash+course) I was able to complete the game following the instruction of the book and have added improvements to the game to practice using Python and Python libraries.
 
