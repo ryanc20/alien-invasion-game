@@ -1,4 +1,5 @@
 import sys
+import os
 from time import sleep
 
 import pygame
@@ -36,6 +37,7 @@ def ship_hit(ai_settings, stats, screen, sb, ship, aliens, bullets):
 		stats.game_active = False
 		pygame.mouse.set_visible(True)
 
+
 def get_number_rows(ai_settings, ship_height, alien_height):
 	"""Determine the number of rows of aliens that fit on the screen."""
 	available_space_y = (ai_settings.screen_height - 
@@ -71,14 +73,19 @@ def create_fleet(ai_settings, screen, ship, aliens):
 		for alien_number in range(number_aliens_x):
 			create_alien(ai_settings, screen, aliens, alien_number,
 				row_number)
+
+def change_fleet_direction(ai_settings, aliens):
+	"""Drop the entire fleet and change the fleet's direction."""
+	for alien in aliens.sprites():
+		alien.rect.y += ai_settings.fleet_drop_speed
+	ai_settings.fleet_direction *= -1
+
 def check_fleet_edges(ai_settings, aliens):
 	"""Respond appropriately if any aliens have reached an edge."""
 	for alien in aliens.sprites():
 		if alien.check_edges():
 			change_fleet_direction(ai_settings, aliens)
 			break
-
-
 
 def check_aliens_bottom(ai_settings, stats, screen, sb, ship, aliens, bullets):
 	"""Check if any aliens have reached the bottom of the screen."""
@@ -112,6 +119,13 @@ def check_bullet_alien_collision(ai_settings, screen, stats, sb, ship,
 
 		create_fleet(ai_settings, screen, ship, aliens)
 
+def check_high_score(stats, sb):
+	"""Check to see if there's a new high score."""
+	if stats.score > stats.high_score:
+		stats.high_score = stats.score
+		sb.prep_high_score()
+
+
 def check_keydown_events(event, ai_settings, screen, ship, bullets):
 	"""Respond to keypressed."""
 	if event.key == pygame.K_RIGHT:
@@ -130,16 +144,11 @@ def check_keyup_events(event, ship):
 	elif event.key == pygame.K_LEFT:
 			ship.moving_left = False
 
-def check_high_score(stats, sb):
-	"""Check to see if there's a new high score."""
-	if stats.score > stats.high_score:
-		stats.high_score = stats.score
-		sb.prep_high_score()
-
 def check_events(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets):
 	"""Respond to keypresses and mouse events."""
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
+			store_high_score(stats)
 			sys.exit()
 
 		elif event.type == pygame.KEYDOWN:
@@ -181,12 +190,6 @@ def check_play_button(ai_settings, screen, stats, sb, play_button, ship, aliens,
 		create_fleet(ai_settings, screen, ship, aliens)
 		ship.center_ship()
 
-def change_fleet_direction(ai_settings, aliens):
-	"""Drop the entire fleet and change the fleet's direction."""
-	for alien in aliens.sprites():
-		alien.rect.y += ai_settings.fleet_drop_speed
-	ai_settings.fleet_direction *= -1
-
 def update_aliens(ai_settings, screen, stats, sb, ship, aliens, bullets):
 	"""
 		Check if the fleet is at an edge,
@@ -201,6 +204,18 @@ def update_aliens(ai_settings, screen, stats, sb, ship, aliens, bullets):
 
 	# Look for aliens hitting the bottom of the screen.
 	check_aliens_bottom(ai_settings, stats, screen, sb, ship, aliens, bullets)
+
+def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets):
+	"""Update position of bullets and get rid of old bullets."""
+	# Update bullet positions.
+	bullets.update()
+	# Get rid of bullets that have disappeared.
+	for bullet in bullets.copy():
+		if bullet.rect.bottom <= 0:
+				bullets.remove(bullet)
+
+	check_bullet_alien_collision(ai_settings, screen, stats, sb, ship, 
+		aliens, bullets)
 
 def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets, 
 		play_button):
@@ -224,14 +239,14 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
 	# Make the most recently drawn screen visible.
 	pygame.display.flip()
 
-def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets):
-	"""Update position of bullets and get rid of old bullets."""
-	# Update bullet positions.
-	bullets.update()
-	# Get rid of bullets that have disappeared.
-	for bullet in bullets.copy():
-		if bullet.rect.bottom <= 0:
-				bullets.remove(bullet)
+def set_screen_location(x, y):
+	"""Set the location of the window on the screen."""
+	os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (x,y)
 
-	check_bullet_alien_collision(ai_settings, screen, stats, sb, ship, 
-		aliens, bullets)
+def store_high_score(stats):
+	"""Store the high score into a text file and quit."""
+	filename = 'high_score.txt'
+
+	with open(filename, 'w') as file_object:
+		hs = str(stats.high_score)
+		file_object.write(hs)
