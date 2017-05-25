@@ -47,8 +47,8 @@ class Ship(Sprite):
 			Update the ship's position based on the movement flag.
 		"""
 		# Animation for the ship to change colors!
-		for count in range(1000):
-			if count == 999:
+		for count in range(100):
+			if count == 99:
 				self.index +=1
 				if self.index >= 3:
 					self.index = 0
