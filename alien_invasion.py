@@ -1,12 +1,5 @@
 import sys
 
-import os
-
-# Set the location of the window on the screen.
-x=160
-y=40
-os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (x,y)
-
 import pygame
 from pygame.sprite import Group
 
@@ -19,6 +12,7 @@ from alien import Alien
 import game_functions as gf
 
 def run_game():
+	gf.set_screen_location(160, 40)
 	pygame.init()
 	ai_settings = Settings()
 	screen = pygame.display.set_mode(
@@ -59,4 +53,3 @@ def run_game():
 		 	bullets, play_button)
 
 run_game()
-
