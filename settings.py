@@ -14,7 +14,16 @@ class Settings():
 		# Bullet settings
 		self.bullet_width = 3
 		self.bullet_height = 15
-		self.bullet_color = 60, 60, 60
+		self.bullet_color_red = 255, 0, 0
+		self.bullet_color_green = 0, 255, 0
+		self.bullet_color_blue = 0, 0, 255
+		self.bullet_colors = []
+		self.bullet_colors.append(self.bullet_color_red)
+		self.bullet_colors.append(self.bullet_color_blue)
+		self.bullet_colors.append(self.bullet_color_green)
+		self.index = 0
+		self.bullet_color = self.bullet_colors[self.index]
+
 		self.bullets_allowed = 3
 
 		# Alien settings

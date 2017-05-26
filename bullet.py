@@ -21,8 +21,20 @@ class Bullet(Sprite):
 		self.color = ai_settings.bullet_color
 		self.speed_factor = ai_settings.bullet_speed_factor
 
-	def update(self):
-		"""Move the bullet up the screen."""
+	def update(self, ai_settings):
+		"""Move the bullet up the screen and change colors."""
+		
+		for count in range(10):
+			if count == 9:
+				ai_settings.index += 1
+				if ai_settings.index >= 3:
+					ai_settings.index = 0
+				ai_settings.bullet_color = ai_settings.bullet_colors[ai_settings.index]
+				count = 0
+			else:
+				count += 1
+
+
 		# Update the decimal position of the bullet.
 		self.y -= self.speed_factor
 		# Update the rect position

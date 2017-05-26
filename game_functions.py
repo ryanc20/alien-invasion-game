@@ -126,7 +126,7 @@ def check_high_score(stats, sb):
 		sb.prep_high_score()
 
 
-def check_keydown_events(event, ai_settings, screen, ship, bullets):
+def check_keydown_events(event, ai_settings, stats, screen, ship, bullets):
 	"""Respond to keypressed."""
 	if event.key == pygame.K_RIGHT:
 		ship.moving_right = True
@@ -153,7 +153,7 @@ def check_events(ai_settings, screen, stats, sb, play_button, ship, aliens, bull
 			sys.exit()
 
 		elif event.type == pygame.KEYDOWN:
-			check_keydown_events(event, ai_settings, screen, ship, bullets)
+			check_keydown_events(event, ai_settings, stats, screen, ship, bullets)
 
 		elif event.type == pygame.KEYUP:
 			check_keyup_events(event, ship)
@@ -209,7 +209,7 @@ def update_aliens(ai_settings, screen, stats, sb, ship, aliens, bullets):
 def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets):
 	"""Update position of bullets and get rid of old bullets."""
 	# Update bullet positions.
-	bullets.update()
+	bullets.update(ai_settings)
 	# Get rid of bullets that have disappeared.
 	for bullet in bullets.copy():
 		if bullet.rect.bottom <= 0:
