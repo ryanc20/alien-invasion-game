@@ -21,7 +21,7 @@ I am fascinated by the process of creating games and managing everything to crea
 
 ## How to Run
 
-Download the repository (assuming Python and the Pygame library are installed) and run the alien_invasion.py
+Download the repository (assuming Python and the Pygame library are installed) and run the alien_invasion.py file.
 
 ## Note
 
@@ -29,7 +29,7 @@ The game was completed following a tutorial from the book [Python Crash Course: 
 
 The current version is incomplete and I plan to make several changes such as:
 - Storing the High Score to be saved even when the game is exited. (Completed)
-- Animation of the ship and aliens.
+- Animation of the ship and aliens. (Completed 50%)
 - Audio for the bullets and background music.
 - At the end of the game I would like to display stats such as accuracy and aliens destroyed.
 - Improve the graphics and finetune the gameplay.
